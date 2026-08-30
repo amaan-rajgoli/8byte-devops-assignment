@@ -29,6 +29,10 @@ jobs:
         run: |
           npm install
           npm test
+      - name: Show OIDC claims for trust-policy troubleshooting
+        run: |
+          token=$(curl -sSf -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com" | jq -r '.value')
+          echo "$token" | cut -d. -f2 | base64 -d | jq '{aud, sub, repository, ref, environment, actor}'
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
