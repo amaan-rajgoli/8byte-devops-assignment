@@ -15,7 +15,7 @@ resource "aws_iam_role" "github_deploy" {
     Condition = {
       StringEquals = {
         "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-        "token.actions.githubusercontent.com:sub" = "repo:${var.github_repository}:environment:production"
+        "token.actions.githubusercontent.com:sub" = "repo:amaan-rajgoli@106171459/8byte-devops-assignment@1351148649:environment:production"
       }
     }
   }] })
