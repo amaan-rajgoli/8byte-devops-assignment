@@ -34,7 +34,7 @@ CloudWatch Logs centralizes container stdout/stderr at `/ecs/<project>-<environm
 
 - Private ECS and database subnets; no public RDS access.
 - Layered security groups with only necessary ingress.
-- Encryption at rest for RDS; database URL stored in Secrets Manager.
+- Encryption at rest for RDS; database URL stored in Secrets Manager. TLS is enabled for the assessment database connection; production should validate against the AWS RDS CA bundle instead of disabling certificate validation.
 - GitHub OIDC removes long-lived AWS credentials from GitHub.
 - ECR image scanning is enabled; deploy role has narrowly scoped ECR/ECS permissions.
 

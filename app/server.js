@@ -11,7 +11,11 @@ function respond(res, status, body) {
 async function databaseHealthy() {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) return { configured: false };
-  const client = new Client({ connectionString, connectionTimeoutMillis: 3000 });
+  const client = new Client({
+    connectionString,
+    connectionTimeoutMillis: 3000,
+    ssl: { rejectUnauthorized: false }
+  });
   try {
     await client.connect();
     await client.query('SELECT 1');
