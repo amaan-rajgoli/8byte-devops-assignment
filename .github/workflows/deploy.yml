@@ -36,7 +36,9 @@ jobs:
       - id: ecr
         uses: aws-actions/amazon-ecr-login@v2
       - name: Build and push image
-        env: { REGISTRY: ${{ steps.ecr.outputs.registry }}, TAG: ${{ github.sha }} }
+        env:
+          REGISTRY: ${{ steps.ecr.outputs.registry }}
+          TAG: ${{ github.sha }}
         run: |
           docker build -t $REGISTRY/$ECR_REPOSITORY:$TAG .
           docker push $REGISTRY/$ECR_REPOSITORY:$TAG
