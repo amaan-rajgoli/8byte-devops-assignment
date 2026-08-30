@@ -140,8 +140,9 @@ resource "aws_db_instance" "main" {
   tags                    = local.tags
 }
 resource "aws_secretsmanager_secret" "database_url" {
-  name = "${local.name}/database-url"
-  tags = local.tags
+  name                    = "${local.name}/database-url"
+  recovery_window_in_days = 0
+  tags                    = local.tags
 }
 resource "aws_secretsmanager_secret_version" "database_url" {
   secret_id     = aws_secretsmanager_secret.database_url.id
@@ -150,6 +151,7 @@ resource "aws_secretsmanager_secret_version" "database_url" {
 
 resource "aws_ecr_repository" "app" {
   name                 = local.name
+  force_delete         = true
   image_tag_mutability = "MUTABLE"
   image_scanning_configuration { scan_on_push = true }
   tags = local.tags
