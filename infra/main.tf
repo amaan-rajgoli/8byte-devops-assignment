@@ -145,7 +145,7 @@ resource "aws_secretsmanager_secret" "database_url" {
 }
 resource "aws_secretsmanager_secret_version" "database_url" {
   secret_id     = aws_secretsmanager_secret.database_url.id
-  secret_string = "postgresql://${var.db_username}:${random_password.database.result}@${aws_db_instance.main.address}:5432/${var.db_name}?sslmode=require"
+  secret_string = "postgresql://${var.db_username}:${random_password.database.result}@${aws_db_instance.main.address}:5432/${var.db_name}"
 }
 
 resource "aws_ecr_repository" "app" {
@@ -238,4 +238,8 @@ resource "aws_ecs_service" "app" {
   }
   depends_on = [aws_lb_listener.http]
   tags       = local.tags
+
+  lifecycle {
+    ignore_changes = [task_definition]
+  }
 }
